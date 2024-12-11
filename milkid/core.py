@@ -99,7 +99,8 @@ class IdGenerator:
                 else:
                     last_counter += 1
                     decimal += last_counter
-                rand_part = decimal_to_character(decimal).zfill(self.__rand_length)[1:self.__rand_length]
+                raw_rand_part = decimal_to_character(decimal).zfill(self.__rand_length)
+                rand_part = raw_rand_part[len(raw_rand_part)-self.__rand_length+1:]
             else:
                 decimal = random_bigint(self.__max_rand_decimal)
                 rand_part = decimal_to_character(decimal).zfill(self.__rand_length)[1:self.__rand_length]
