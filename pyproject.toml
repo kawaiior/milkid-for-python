@@ -4,6 +4,8 @@ version = "0.1.0"
 description = "milkid for python"
 authors = ["kawaiior <kawaiiorv@gmail.com>"]
 readme = "README.md"
+homepage = "https://github.com/kawaiior/milkid-for-python"
+repository = "https://github.com/kawaiior/milkid-for-python"
 
 [tool.poetry.dependencies]
 python = "^3.8"
