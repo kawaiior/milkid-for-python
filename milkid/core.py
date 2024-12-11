@@ -56,7 +56,7 @@ class IdGenerator:
         self.__rand_length = self.__length + 1 - (7 if self.__timestamp else 0) - (5 if self.__fingerprint else 0)
 
         max_rand_characters = "z" * self.__rand_length
-        self.__max_rand_decimal = character_to_decimal(max_rand_characters)
+        self.__max_rand_decimal = character_to_decimal(max_rand_characters) - 10
         self.__hash_seed = hash_seed
 
     def create_id(self, fingerprint: Union[bytes, str, None] = None) -> str:
@@ -78,16 +78,31 @@ class IdGenerator:
             fingerprint_hash = xxhash.xxh64(fingerprint, self.__hash_seed).intdigest()
             id_parts.append(decimal_to_character(fingerprint_hash)[2:7])
 
+        # if self.__rand_length > 1:
+        #     decimal = random_bigint(self.__max_rand_decimal)
+        #     if self.__sequential:
+        #         if last_time != now:
+        #             last_time = now
+        #             last_counter = 0
+        #         else:
+        #             decimal += last_counter
+        #             last_counter += 1
+        #     rand_part = decimal_to_character(decimal).zfill(self.__rand_length)[1:self.__rand_length]
+        #     id_parts.append(rand_part)
+
         if self.__rand_length > 1:
-            decimal = random_bigint(self.__max_rand_decimal)
             if self.__sequential:
+                decimal = random.Random(now).randint(0, self.__max_rand_decimal)
                 if last_time != now:
                     last_time = now
                     last_counter = 0
                 else:
-                    decimal += last_counter
                     last_counter += 1
-            rand_part = decimal_to_character(decimal).zfill(self.__rand_length)[1:self.__rand_length]
+                    decimal += last_counter
+                rand_part = decimal_to_character(decimal).zfill(self.__rand_length)[1:self.__rand_length]
+            else:
+                decimal = random_bigint(self.__max_rand_decimal)
+                rand_part = decimal_to_character(decimal).zfill(self.__rand_length)[1:self.__rand_length]
             id_parts.append(rand_part)
 
         if self.__hyphen:
