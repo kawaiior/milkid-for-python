@@ -87,13 +87,13 @@ class IdGenerator:
         if self.__rand_length > 1:
             if self.__sequential:
                 global last_decimal, last_time
-                if last_time != now:
+                if last_time == now:
+                    last_decimal += 1
+                    decimal = last_decimal
+                else:
                     last_time = now
                     decimal = random_bigint(self.__max_rand_decimal)
                     last_decimal = decimal
-                else:
-                    last_decimal += 1
-                    decimal = last_decimal
             else:
                 decimal = random_bigint(self.__max_rand_decimal)
             rand_part = decimal_to_character(decimal).zfill(self.__rand_length)[1:]
