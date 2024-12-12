@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "milkid"
-version = "0.1.1"
+version = "0.1.2"
 description = "milkid for python"
 authors = ["kawaiior <kawaiiorv@gmail.com>"]
 readme = "README.md"

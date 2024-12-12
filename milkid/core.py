@@ -78,12 +78,6 @@ class IdGenerator:
             timestamp_part = decimal_to_character(now - self.__magic_number)
             id_parts.append(timestamp_part[-7:])
 
-        if self.__fingerprint:
-            if isinstance(fingerprint, str):
-                fingerprint = fingerprint.encode("utf-8")
-            fingerprint_hash = xxhash.xxh64(fingerprint, self.__hash_seed).intdigest()
-            id_parts.append(decimal_to_character(fingerprint_hash)[2:7])
-
         if self.__rand_length > 1:
             if self.__sequential:
                 global last_decimal, last_time
@@ -98,6 +92,12 @@ class IdGenerator:
                 decimal = random_bigint(self.__max_rand_decimal)
             rand_part = decimal_to_character(decimal).zfill(self.__rand_length)[1:]
             id_parts.append(rand_part)
+
+        if self.__fingerprint:
+            if isinstance(fingerprint, str):
+                fingerprint = fingerprint.encode("utf-8")
+            fingerprint_hash = xxhash.xxh64(fingerprint, self.__hash_seed).intdigest()
+            id_parts.append(decimal_to_character(fingerprint_hash)[2:7])
 
         if self.__hyphen:
             return "-".join(id_parts)
