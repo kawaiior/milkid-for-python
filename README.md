@@ -13,5 +13,5 @@ from milkid import IdGenerator
 
 id_generator = IdGenerator(length=24, timestamp=True, hyphen=True, fingerprint=True, hash_seed=1234567)
 
-print(id_generator.create_id("test"))  # RbbGrUn-7B22X-92jcItCLNyY7
+print(id_generator.create_id("test"))  # Rbge8Id-RbXmewrZ1Ie7-7B22X
 ```
